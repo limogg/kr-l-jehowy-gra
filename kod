@@ -1,0 +1,75 @@
+#include <iostream>
+#include <ctime>
+
+void PrintIntroduction(int Difficulity)
+{
+    std::cout << "\n===========================================================\n";
+    std::cout << "\nJestes zwyklym jechowym a chcesz stac sie Krolem.\nMusisz odblokowac wszystkie klatki. \nTeraz odblokowujesz klatke nr: "<< Difficulity;
+    std::cout << std::endl;
+
+}
+
+bool PlayGame(int Difficulity)
+{
+    PrintIntroduction(Difficulity);
+
+    //Deklaracje wartosci
+    const int CodeA = rand() % Difficulity + Difficulity;
+    const int CodeB = rand() % Difficulity + Difficulity;
+    const int CodeC = rand() % Difficulity + Difficulity;
+    const int CodeSum = CodeA + CodeB + CodeC;
+    const int CodeProduct = CodeA * CodeB * CodeC;
+    
+    std::cout << "\n# Oto 2 podpowiedzi: ";
+    std::cout << "\n# Suma tych trzech liczb daje: ";
+    std::cout << CodeSum;
+    std::cout << "\n# A iloczyn daje: ";
+    std::cout << CodeProduct;
+    std::cout << std::endl;
+
+    int GuessA, GuessB, GuessC;
+    
+    std::cin >> GuessA >> GuessB >> GuessC;
+    std::cout << "\n+ Twoje liczny to: " << GuessA << GuessB << GuessC;
+    std::cout << std::endl;
+    
+    int GuessSum = GuessA + GuessB + GuessC;
+    int GuessProduct = GuessA * GuessB * GuessC;
+
+    if(CodeSum == GuessSum && CodeProduct == GuessProduct)
+    {
+        std::cout << "\nUdalo ci sie odblokowac klatke.\nPrzechodzisz niezauwarzony do kolejnej klatki!\n";
+        return true;
+    }
+    else
+    {
+        std::cout << "\nZostales zlapany.\nMusisz sprobowac ponownie.\n";
+        return false;
+    }
+}
+
+int main()
+{   
+    srand(time(NULL)); // randomizuje czas
+
+    int LevelDifficulty = 1;
+    int Maxlevel = 5;
+
+    while (LevelDifficulty <= Maxlevel)
+    
+    {
+        bool bLevelComplete = PlayGame(LevelDifficulty);
+        std::cin.clear();//usuwa errory
+        std::cin.ignore();// usuwa bufor
+        if (bLevelComplete)
+        {
+            ++LevelDifficulty;
+            
+        }
+        
+        
+        
+    }
+    std::cout << "\nWygrales.\nOtworzyles droge towarzyszom.\nZostajesz Krolem!\n";
+    return 0;
+}
